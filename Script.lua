@@ -267,7 +267,8 @@ local function checkGame()
         [8581084604] = {"https://raw.githubusercontent.com/likegenmMain/Scripts/refs/heads/main/Murino.lua", "Murino"},
         [7429689898] = {"https://raw.githubusercontent.com/likegenmMain/Scripts/refs/heads/main/TIAP2.lua", "Troll is a pinning 2"},
         [210851291] = {"https://raw.githubusercontent.com/likegenmMain/Scripts/refs/heads/main/BBFT.lua", "BBFT"},
-        [1430007363] = {"https://raw.githubusercontent.com/likegenmMain/Scripts/refs/heads/main/Granny.lua", "Granny: Multiplayer"}
+        [1430007363] = {"https://raw.githubusercontent.com/likegenmMain/Scripts/refs/heads/main/Granny.lua", "Granny: Multiplayer"},
+        [2251388500] = {"https://raw.githubusercontent.com/likegenmMain/Scripts/refs/heads/main/Twisted.lua", "Twisted"}
     }
 
     statusLabel.Text = "Game ID: " .. tostring(currentGameId)
