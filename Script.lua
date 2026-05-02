@@ -253,21 +253,21 @@ local function checkGame()
     task.wait(0.5)
 
     local gameScripts = {
-        [3808081382] = {"https://raw.githubusercontent.com/Likegenm/Real-Scripts/refs/heads/main/TSB.lua", "The Strongest Battlegrounds"},
-        [3109731140] = {"https://raw.githubusercontent.com/Likegenm/Real-Scripts/refs/heads/main/Intruder.lua", "Intruder"},
+        [3808081382] = {"https://raw.githubusercontent.com/likegenmMain/Scripts/refs/heads/main/TSB.lua", "The Strongest Battlegrounds"},
+        [3109731140] = {"https://raw.githubusercontent.com/likegenmMain/Scripts/refs/heads/main/Intruder.lua", "Intruder"},
         [66654135] = {"https://raw.githubusercontent.com/Likegenm/Real-Scripts/refs/heads/main/MM2.lua", "Murder Mystery 2"},
-        [99402433] = {"https://raw.githubusercontent.com/Likegenm/Real-Scripts/refs/heads/main/Speedrun12.lua", "Speedrun 12"},
+        [99402433] = {"https://raw.githubusercontent.com/likegenmMain/Scripts/refs/heads/main/Speedrun.lua", "Speedrun 12"},
         [6699967032] = {"https://raw.githubusercontent.com/likegenmMain/Scripts/refs/heads/main/Fields.lua", "The Field"},
         [6280758286] = {"https://raw.githubusercontent.com/likegenmMain/Scripts/refs/heads/main/ArmyRP.lua", "Army Roleplay"},
         [1489026993] = {"https://raw.githubusercontent.com/Likegenm/Real-Scripts/refs/heads/main/SK.lua", "Survive the Killer"},
         [4777817887] = {"https://raw.githubusercontent.com/likegenmMain/Scripts/refs/heads/main/BladeBall.lua", "Blade Ball"},
-        [1116949753] = {"https://raw.githubusercontent.com/Likegenm/Real-Scripts/refs/heads/main/Isle.lua", "The Isle"},
+        [1116949753] = {"https://raw.githubusercontent.com/likegenmMain/Scripts/refs/heads/main/Isle.lua", "The Isle"},
         [7633926880] = {"https://raw.githubusercontent.com/likegenmMain/Scripts/refs/heads/main/BloxStrikelua", "BloxStrike"},
         [9363735110] = {"https://raw.githubusercontent.com/Likegenm/Real-Scripts/refs/heads/main/ETFB.lua", "Escape Tsunami for Brainrots"},
-        [8581084604] = {"https://raw.githubusercontent.com/Likegenm/Real-Scripts/refs/heads/main/MurinoHorror.lua", "Murino"},
-        [7429689898] = {"https://raw.githubusercontent.com/Likegenm/Real-Scripts/refs/heads/main/TIAP2.lua", "Troll is a pinning 2"},
+        [8581084604] = {"https://raw.githubusercontent.com/likegenmMain/Scripts/refs/heads/main/Murino.lua", "Murino"},
+        [7429689898] = {"https://raw.githubusercontent.com/likegenmMain/Scripts/refs/heads/main/TIAP2.lua", "Troll is a pinning 2"},
         [210851291] = {"https://raw.githubusercontent.com/likegenmMain/Scripts/refs/heads/main/BBFT.lua", "BBFT"},
-        [1430007363] = {"https://raw.githubusercontent.com/Likegenm/Real-Scripts/refs/heads/main/Granny%3A%20Multiplayer.lua", "Granny: Multiplayer"}
+        [1430007363] = {"https://raw.githubusercontent.com/likegenmMain/Scripts/refs/heads/main/Granny.lua", "Granny: Multiplayer"}
     }
 
     statusLabel.Text = "Game ID: " .. tostring(currentGameId)
