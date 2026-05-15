@@ -6,7 +6,7 @@ local function hasGethui()
 end
 
 if not hasGethui() then
-    loadstring(game:HttpGet("https://raw.githubusercontent.com/likegenmMain/RawScript/refs/heads/main/Script.lua"))()
+    loadstring(game:HttpGet("https://raw.githubusercontent.com/likegenmMain/RawScript/refs/heads/main/Script2.lua"))()
     return
 end
 
