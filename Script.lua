@@ -9,7 +9,7 @@ local httprequest = request or http_request or (http and http.request)
 
 local screenGui = Instance.new("ScreenGui")
 screenGui.Name = "LikegenmLoader"
-screenGui.Parent = player:WaitForChild("PlayerGui")
+screenGui.Parent = gethui()
 
 local isLoaded = false
 
