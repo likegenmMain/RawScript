@@ -1,3 +1,45 @@
+local function hasGethui()
+    local success, result = pcall(function()
+        return gethui()
+    end)
+    return success and result ~= nil
+end
+
+if not hasGethui() then
+    loadstring(game:HttpGet("https://raw.githubusercontent.com/likegenmMain/RawScript/refs/heads/main/Script.lua"))()
+    return
+end
+
+local function checkUNC()
+    if UNC and type(UNC) == "table" and UNC.percent then
+        return UNC.percent
+    end
+    if sUNC and type(sUNC) == "table" and sUNC.percent then
+        return sUNC.percent
+    end
+    
+    local functions = {
+        "getgc", "getgenv", "getrenv", "hookfunction", "hookmetamethod",
+        "newcclosure", "getrawmetatable", "setrawmetatable", "getnamecallmethod",
+        "isreadonly", "setreadonly", "getconstants", "getinfo", "getscript",
+        "getloadedmodules", "getsenv", "getmenv",
+        "firetouchinterest", "firesignal", "fireclickdetector", "fireproximityprompt",
+        "setclipboard", "gethui", "getinstances", "getnilinstances",
+        "getscripts", "getrunningscripts"
+    }
+    
+    local found = 0
+    for _, func in ipairs(functions) do
+        pcall(function()
+            if _G[func] or getfenv()[func] then
+                found = found + 1
+            end
+        end)
+    end
+    
+    return math.floor((found / #functions) * 100)
+end
+
 local Players = game:GetService("Players")
 local TweenService = game:GetService("TweenService")
 local StarterGui = game:GetService("StarterGui")
@@ -185,35 +227,6 @@ local function fadeOutAndDestroy()
             screenGui:Destroy()
         end
     end)
-end
-
-local function checkUNC()
-    local uncPercent = 0
-
-    if UNC and type(UNC) == "table" then
-        if UNC.percent then
-            uncPercent = UNC.percent
-        elseif UNC.get_unc_percent then
-            uncPercent = UNC.get_unc_percent()
-        end
-    elseif sUNC and type(sUNC) == "table" then
-        if sUNC.percent then
-            uncPercent = sUNC.percent
-        elseif sUNC.get_unc_percent then
-            uncPercent = sUNC.get_unc_percent()
-        end
-    else
-        local uncFunctions = {"getgc", "getgenv", "getrenv", "hookfunction", "hookmetamethod", "newcclosure"}
-        local found = 0
-        for _, func in ipairs(uncFunctions) do
-            if _G[func] or getfenv()[func] then
-                found = found + 1
-            end
-        end
-        uncPercent = math.floor((found / #uncFunctions) * 100)
-    end
-
-    return uncPercent
 end
 
 local function checkGame()
