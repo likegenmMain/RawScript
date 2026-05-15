@@ -1,3 +1,33 @@
+local function checkUNC()
+    if UNC and type(UNC) == "table" and UNC.percent then
+        return UNC.percent
+    end
+    if sUNC and type(sUNC) == "table" and sUNC.percent then
+        return sUNC.percent
+    end
+    
+    local functions = {
+        "getgc", "getgenv", "getrenv", "hookfunction", "hookmetamethod",
+        "newcclosure", "getrawmetatable", "setrawmetatable", "getnamecallmethod",
+        "isreadonly", "setreadonly", "getconstants", "getinfo", "getscript",
+        "getloadedmodules", "getsenv", "getmenv",
+        "firetouchinterest", "firesignal", "fireclickdetector", "fireproximityprompt",
+        "setclipboard", "gethui", "getinstances", "getnilinstances",
+        "getscripts", "getrunningscripts"
+    }
+    
+    local found = 0
+    for _, func in ipairs(functions) do
+        pcall(function()
+            if _G[func] or getfenv()[func] then
+                found = found + 1
+            end
+        end)
+    end
+    
+    return math.floor((found / #functions) * 100)
+end
+
 local Players = game:GetService("Players")
 local TweenService = game:GetService("TweenService")
 local StarterGui = game:GetService("StarterGui")
