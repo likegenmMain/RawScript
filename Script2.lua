@@ -39,7 +39,7 @@ local httprequest = request or http_request or (http and http.request)
 
 local screenGui = Instance.new("ScreenGui")
 screenGui.Name = "LikegenmLoader"
-screenGui.Parent = player:WaitForChild("PlayerGui")
+screenGui.Parent = gethui()
 
 local isLoaded = false
 
@@ -215,35 +215,6 @@ local function fadeOutAndDestroy()
             screenGui:Destroy()
         end
     end)
-end
-
-local function checkUNC()
-    local uncPercent = 0
-
-    if UNC and type(UNC) == "table" then
-        if UNC.percent then
-            uncPercent = UNC.percent
-        elseif UNC.get_unc_percent then
-            uncPercent = UNC.get_unc_percent()
-        end
-    elseif sUNC and type(sUNC) == "table" then
-        if sUNC.percent then
-            uncPercent = sUNC.percent
-        elseif sUNC.get_unc_percent then
-            uncPercent = sUNC.get_unc_percent()
-        end
-    else
-        local uncFunctions = {"getgc", "getgenv", "getrenv", "hookfunction", "hookmetamethod", "newcclosure"}
-        local found = 0
-        for _, func in ipairs(uncFunctions) do
-            if _G[func] or getfenv()[func] then
-                found = found + 1
-            end
-        end
-        uncPercent = math.floor((found / #uncFunctions) * 100)
-    end
-
-    return uncPercent
 end
 
 local function checkGame()
