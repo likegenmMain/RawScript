@@ -9,7 +9,7 @@ local function checkUNC()
     local functions = {
         "getgc", "getgenv", "getrenv", "hookfunction", "hookmetamethod",
         "newcclosure", "getrawmetatable", "setrawmetatable", "getnamecallmethod",
-        "isreadonly", "setreadonly", "getconstants", "getinfo", "getscript",
+        "isreadonly", "setreadonly", "getconstants", "getinfo",
         "getloadedmodules", "getsenv", "getmenv",
         "firetouchinterest", "firesignal", "fireclickdetector", "fireproximityprompt",
         "setclipboard", "gethui", "getinstances", "getnilinstances",
@@ -266,10 +266,8 @@ local function checkGame()
         [7633926880] = {"https://raw.githubusercontent.com/likegenmMain/Scripts/refs/heads/main/BloxStrikelua", "BloxStrike"},
         [9363735110] = {"https://raw.githubusercontent.com/Likegenm/Real-Scripts/refs/heads/main/ETFB.lua", "Escape Tsunami for Brainrots"},
         [8581084604] = {"https://raw.githubusercontent.com/likegenmMain/Scripts/refs/heads/main/Murino.lua", "Murino"},
-        [7429689898] = {"https://raw.githubusercontent.com/likegenmMain/Scripts/refs/heads/main/TIAP2.lua", "Troll is a pinning 2"},
         [210851291] = {"https://raw.githubusercontent.com/likegenmMain/Scripts/refs/heads/main/BBFT.lua", "BBFT"},
-        [1430007363] = {"https://raw.githubusercontent.com/likegenmMain/Scripts/refs/heads/main/Granny.lua", "Granny: Multiplayer"},
-        [2251388500] = {"https://raw.githubusercontent.com/likegenmMain/Scripts/refs/heads/main/Twisted.lua", "Twisted"}
+        [1430007363] = {"https://raw.githubusercontent.com/likegenmMain/Scripts/refs/heads/main/Granny.lua", "Granny: Multiplayer"}
     }
 
     statusLabel.Text = "Game ID: " .. tostring(currentGameId)
