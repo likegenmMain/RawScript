@@ -21,7 +21,7 @@ local function checkUNC()
     local functions = {
         "getgc", "getgenv", "getrenv", "hookfunction", "hookmetamethod",
         "newcclosure", "getrawmetatable", "setrawmetatable", "getnamecallmethod",
-        "isreadonly", "setreadonly", "getconstants", "getinfo", "getscript",
+        "isreadonly", "setreadonly", "getconstants", "getinfo",
         "getloadedmodules", "getsenv", "getmenv",
         "firetouchinterest", "firesignal", "fireclickdetector", "fireproximityprompt",
         "setclipboard", "gethui", "getinstances", "getnilinstances",
