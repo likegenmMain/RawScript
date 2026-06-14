@@ -63,6 +63,8 @@ screenGui.Name = "Likegenm Loader"
 screenGui.Parent = gethui()
 
 local isLoaded = false
+local loadStartTime = tick()
+local maxLoadTime = 10
 
 local function playNotificationSound(isSuccess)
     local sound = Instance.new("Sound")
@@ -286,9 +288,28 @@ local function updateProgress(percent, text, statusText)
     if statusText then statusLabel.Text = statusText end
 end
 
+local function forceClose()
+    if not isLoaded then
+        isLoaded = true
+        updateProgress(1, "Timeout", "Loading took too long")
+        task.wait(2)
+        pcall(function()
+            if screenGui and screenGui.Parent then
+                screenGui:Destroy()
+            end
+        end)
+    end
+end
+
 local hue = 0
 RunService.RenderStepped:Connect(function()
     if isLoaded then return end
+    
+    if tick() - loadStartTime > maxLoadTime then
+        forceClose()
+        return
+    end
+    
     hue = (hue + 0.005) % 1
     local color = Color3.fromHSV(hue, 1, 1)
     accentLine.BackgroundColor3 = color
@@ -328,6 +349,8 @@ local function fadeOutAndDestroy()
 end
 
 local function checkGame()
+    loadStartTime = tick()
+    
     updateProgress(0.05, "Checking environment", "Verifying executor...")
     task.wait(0.4)
     
