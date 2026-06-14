@@ -10,6 +10,13 @@ if not hasGethui() then
     return
 end
 
+local function getExecutorName()
+    local success, name = pcall(function()
+        return tostring(identifyexecutor())
+    end)
+    return success and name or "Unknown"
+end
+
 local function checkUNC()
     if UNC and type(UNC) == "table" and UNC.percent then
         return UNC.percent
@@ -44,13 +51,15 @@ local Players = game:GetService("Players")
 local TweenService = game:GetService("TweenService")
 local StarterGui = game:GetService("StarterGui")
 local HttpService = game:GetService("HttpService")
+local RunService = game:GetService("RunService")
 
 local player = Players.LocalPlayer
 local currentGameId = game.GameId
+local executorName = getExecutorName()
 local httprequest = request or http_request or (http and http.request)
 
 local screenGui = Instance.new("ScreenGui")
-screenGui.Name = "LikegenmLoader"
+screenGui.Name = "Likegenm Loader"
 screenGui.Parent = gethui()
 
 local isLoaded = false
@@ -101,127 +110,216 @@ local function openDiscordInvite()
     end
 end
 
-local blackScreen = Instance.new("Frame")
-blackScreen.Size = UDim2.new(1, 0, 1, 0)
-blackScreen.Position = UDim2.new(0, 0, 0, 0)
-blackScreen.BackgroundColor3 = Color3.new(0, 0, 0)
-blackScreen.BackgroundTransparency = 0
-blackScreen.ZIndex = 10
-blackScreen.Parent = screenGui
+local function getExecutorColor(name)
+    local lower = name:lower()
+    if lower:find("wave") then return Color3.fromRGB(0, 191, 255)
+    elseif lower:find("ronix") then return Color3.fromRGB(255, 69, 0)
+    elseif lower:find("solara") then return Color3.fromRGB(255, 215, 0)
+    elseif lower:find("xeno") then return Color3.fromRGB(255, 20, 147)
+    elseif lower:find("nihon") then return Color3.fromRGB(138, 43, 226)
+    elseif lower:find("codex") then return Color3.fromRGB(0, 255, 255)
+    elseif lower:find("delta") then return Color3.fromRGB(255, 128, 0)
+    elseif lower:find("arceus") then return Color3.fromRGB(255, 0, 0)
+    else return Color3.fromRGB(255, 255, 255) end
+end
 
-local textLabel = Instance.new("TextLabel")
-textLabel.Size = UDim2.new(0.8, 0, 0.2, 0)
-textLabel.Position = UDim2.new(0.1, 0, 0.4, 0)
-textLabel.BackgroundTransparency = 1
-textLabel.Text = "Likegenm Scripts"
-textLabel.Font = Enum.Font.GothamBlack
-textLabel.TextSize = 72
-textLabel.TextTransparency = 0
-textLabel.TextColor3 = Color3.new(1, 1, 1)
-textLabel.TextStrokeTransparency = 0.5
-textLabel.TextStrokeColor3 = Color3.new(0, 0, 0)
-textLabel.ZIndex = 11
-textLabel.Parent = screenGui
+local mainFrame = Instance.new("Frame")
+mainFrame.Size = UDim2.new(0, 520, 0, 300)
+mainFrame.Position = UDim2.new(0.5, -260, 0.5, -150)
+mainFrame.BackgroundColor3 = Color3.fromRGB(15, 15, 25)
+mainFrame.BorderSizePixel = 0
+mainFrame.ZIndex = 10
+mainFrame.Parent = screenGui
+
+local mainCorner = Instance.new("UICorner")
+mainCorner.CornerRadius = UDim.new(0, 12)
+mainCorner.Parent = mainFrame
+
+local gradient = Instance.new("UIGradient")
+gradient.Color = ColorSequence.new({
+    ColorSequenceKeypoint.new(0, Color3.fromRGB(25, 25, 45)),
+    ColorSequenceKeypoint.new(1, Color3.fromRGB(10, 10, 20))
+})
+gradient.Parent = mainFrame
+
+local topBar = Instance.new("Frame")
+topBar.Size = UDim2.new(1, 0, 0, 50)
+topBar.BackgroundColor3 = Color3.fromRGB(20, 20, 35)
+topBar.BorderSizePixel = 0
+topBar.ZIndex = 11
+topBar.Parent = mainFrame
+
+local topCorner = Instance.new("UICorner")
+topCorner.CornerRadius = UDim.new(0, 12)
+topCorner.Parent = topBar
+
+local topTitle = Instance.new("TextLabel")
+topTitle.Size = UDim2.new(1, 0, 1, 0)
+topTitle.BackgroundTransparency = 1
+topTitle.Text = "  Likegenm Scripts"
+topTitle.Font = Enum.Font.GothamBlack
+topTitle.TextSize = 22
+topTitle.TextColor3 = Color3.fromRGB(255, 255, 255)
+topTitle.TextXAlignment = Enum.TextXAlignment.Left
+topTitle.ZIndex = 12
+topTitle.Parent = topBar
+
+local titleLabel = Instance.new("TextLabel")
+titleLabel.Size = UDim2.new(1, 0, 0, 50)
+titleLabel.Position = UDim2.new(0, 0, 0, 65)
+titleLabel.BackgroundTransparency = 1
+titleLabel.Text = "Initializing"
+titleLabel.Font = Enum.Font.GothamBlack
+titleLabel.TextSize = 36
+titleLabel.TextColor3 = Color3.fromRGB(255, 255, 255)
+titleLabel.ZIndex = 11
+titleLabel.Parent = mainFrame
+
+local subtitleLabel = Instance.new("TextLabel")
+subtitleLabel.Size = UDim2.new(1, 0, 0, 25)
+subtitleLabel.Position = UDim2.new(0, 0, 0, 110)
+subtitleLabel.BackgroundTransparency = 1
+subtitleLabel.Text = "Preparing your experience..."
+subtitleLabel.Font = Enum.Font.Gotham
+subtitleLabel.TextSize = 16
+subtitleLabel.TextColor3 = Color3.fromRGB(150, 150, 170)
+subtitleLabel.ZIndex = 11
+subtitleLabel.Parent = mainFrame
+
+local accentLine = Instance.new("Frame")
+accentLine.Size = UDim2.new(0, 100, 0, 3)
+accentLine.Position = UDim2.new(0.5, -50, 0, 140)
+accentLine.BackgroundColor3 = Color3.fromRGB(255, 50, 50)
+accentLine.BorderSizePixel = 0
+accentLine.ZIndex = 11
+accentLine.Parent = mainFrame
+
+local accentCorner = Instance.new("UICorner")
+accentCorner.CornerRadius = UDim.new(1, 0)
+accentCorner.Parent = accentLine
 
 local statusLabel = Instance.new("TextLabel")
-statusLabel.Size = UDim2.new(0.6, 0, 0.1, 0)
-statusLabel.Position = UDim2.new(0.2, 0, 0.65, 0)
+statusLabel.Size = UDim2.new(1, 0, 0, 20)
+statusLabel.Position = UDim2.new(0, 0, 0, 155)
 statusLabel.BackgroundTransparency = 1
-statusLabel.Text = "Loading..."
+statusLabel.Text = "Checking environment..."
 statusLabel.Font = Enum.Font.Gotham
-statusLabel.TextSize = 24
-statusLabel.TextTransparency = 0
-statusLabel.TextColor3 = Color3.new(1, 1, 1)
+statusLabel.TextSize = 13
+statusLabel.TextColor3 = Color3.fromRGB(120, 120, 150)
 statusLabel.ZIndex = 11
-statusLabel.Parent = screenGui
+statusLabel.Parent = mainFrame
 
-local sliderFrame = Instance.new("Frame")
-sliderFrame.Size = UDim2.new(0.6, 0, 0.02, 0)
-sliderFrame.Position = UDim2.new(0.2, 0, 0.75, 0)
-sliderFrame.BackgroundColor3 = Color3.new(0.2, 0.2, 0.2)
-sliderFrame.BorderSizePixel = 0
-sliderFrame.ZIndex = 11
-sliderFrame.Parent = screenGui
+local executorLabel = Instance.new("TextLabel")
+executorLabel.Size = UDim2.new(1, 0, 0, 20)
+executorLabel.Position = UDim2.new(0, 0, 0, 175)
+executorLabel.BackgroundTransparency = 1
+executorLabel.Text = "Executor: " .. executorName
+executorLabel.Font = Enum.Font.Gotham
+executorLabel.TextSize = 13
+executorLabel.TextColor3 = getExecutorColor(executorName)
+executorLabel.ZIndex = 11
+executorLabel.Parent = mainFrame
 
-local sliderFill = Instance.new("Frame")
-sliderFill.Size = UDim2.new(0, 0, 1, 0)
-sliderFill.BackgroundColor3 = Color3.new(1, 0, 0)
-sliderFill.BorderSizePixel = 0
-sliderFill.ZIndex = 12
-sliderFill.Parent = sliderFrame
+local progressBar = Instance.new("Frame")
+progressBar.Size = UDim2.new(0, 400, 0, 6)
+progressBar.Position = UDim2.new(0.5, -200, 0, 205)
+progressBar.BackgroundColor3 = Color3.fromRGB(30, 30, 45)
+progressBar.BorderSizePixel = 0
+progressBar.ZIndex = 11
+progressBar.Parent = mainFrame
 
-local corner = Instance.new("UICorner")
-corner.CornerRadius = UDim.new(1, 0)
-corner.Parent = sliderFrame
+local progressCorner = Instance.new("UICorner")
+progressCorner.CornerRadius = UDim.new(1, 0)
+progressCorner.Parent = progressBar
+
+local progressFill = Instance.new("Frame")
+progressFill.Size = UDim2.new(0, 0, 1, 0)
+progressFill.BackgroundColor3 = Color3.fromRGB(255, 50, 50)
+progressFill.BorderSizePixel = 0
+progressFill.ZIndex = 12
+progressFill.Parent = progressBar
 
 local fillCorner = Instance.new("UICorner")
 fillCorner.CornerRadius = UDim.new(1, 0)
-fillCorner.Parent = sliderFill
+fillCorner.Parent = progressFill
 
-local function updateSlider(percent, color)
-    local tweenInfo = TweenInfo.new(0.3, Enum.EasingStyle.Quad, Enum.EasingDirection.Out)
-    local sizeTween = TweenService:Create(sliderFill, tweenInfo, {Size = UDim2.new(percent, 0, 1, 0)})
-    local colorTween = TweenService:Create(sliderFill, tweenInfo, {BackgroundColor3 = color})
-    sizeTween:Play()
-    colorTween:Play()
+local percentLabel = Instance.new("TextLabel")
+percentLabel.Size = UDim2.new(0, 60, 0, 20)
+percentLabel.Position = UDim2.new(0.5, -30, 0, 218)
+percentLabel.BackgroundTransparency = 1
+percentLabel.Text = "0%"
+percentLabel.Font = Enum.Font.GothamBold
+percentLabel.TextSize = 14
+percentLabel.TextColor3 = Color3.fromRGB(200, 200, 220)
+percentLabel.ZIndex = 11
+percentLabel.Parent = mainFrame
+
+local versionLabel = Instance.new("TextLabel")
+versionLabel.Size = UDim2.new(1, 0, 0, 15)
+versionLabel.Position = UDim2.new(0, 0, 0, 270)
+versionLabel.BackgroundTransparency = 1
+versionLabel.Text = "v1.0 | discord.gg/likegenm"
+versionLabel.Font = Enum.Font.Gotham
+versionLabel.TextSize = 11
+versionLabel.TextColor3 = Color3.fromRGB(80, 80, 100)
+versionLabel.ZIndex = 11
+versionLabel.Parent = mainFrame
+
+local particles = {}
+for i = 1, 20 do
+    local particle = Instance.new("Frame")
+    particle.Size = UDim2.new(0, 2, 0, 2)
+    particle.Position = UDim2.new(math.random(), 0, math.random(), 0)
+    particle.BackgroundColor3 = Color3.fromRGB(255, 255, 255)
+    particle.BackgroundTransparency = 0.7
+    particle.BorderSizePixel = 0
+    particle.ZIndex = 11
+    particle.Parent = mainFrame
+    particles[i] = {obj = particle, speed = math.random(10, 30) / 10, offset = math.random(0, 100) / 10}
 end
 
-local function showAnimation()
-    local colors = {
-        Color3.fromRGB(255, 0, 0),
-        Color3.fromRGB(255, 165, 0),
-        Color3.fromRGB(255, 255, 0),
-        Color3.fromRGB(0, 255, 0),
-        Color3.fromRGB(0, 255, 255),
-        Color3.fromRGB(0, 0, 255),
-        Color3.fromRGB(255, 0, 255)
-    }
+local function updateProgress(percent, text, statusText)
+    local tweenInfo = TweenInfo.new(0.5, Enum.EasingStyle.Quad, Enum.EasingDirection.Out)
+    TweenService:Create(progressFill, tweenInfo, {Size = UDim2.new(percent, 0, 1, 0)}):Play()
+    percentLabel.Text = math.floor(percent * 100) .. "%"
+    if text then titleLabel.Text = text end
+    if statusText then statusLabel.Text = statusText end
+end
 
-    local colorIndex = 1
-
-    while not isLoaded do
-        textLabel.TextColor3 = colors[colorIndex]
-        colorIndex = colorIndex + 1
-        if colorIndex > #colors then colorIndex = 1 end
-        wait(0.5)
-        if isLoaded then break end
+local hue = 0
+RunService.RenderStepped:Connect(function()
+    if isLoaded then return end
+    hue = (hue + 0.005) % 1
+    local color = Color3.fromHSV(hue, 1, 1)
+    accentLine.BackgroundColor3 = color
+    progressFill.BackgroundColor3 = color
+    
+    for _, data in ipairs(particles) do
+        local newY = data.obj.Position.Y.Scale - (0.002 * data.speed)
+        if newY < 0 then newY = 1 end
+        data.obj.Position = UDim2.new(data.obj.Position.X.Scale, 0, newY, 0)
+        data.obj.BackgroundTransparency = 0.7 + math.sin(tick() * data.speed + data.offset) * 0.2
     end
-end
-
-local function forceCloseGUI()
-    if not isLoaded then
-        isLoaded = true
-        pcall(function()
-            screenGui:Destroy()
-        end)
-    end
-end
+end)
 
 local function fadeOutAndDestroy()
     isLoaded = true
-
-    local tweenInfo = TweenInfo.new(1, Enum.EasingStyle.Quad, Enum.EasingDirection.Out)
-    local fadeOut = TweenService:Create(blackScreen, tweenInfo, {BackgroundTransparency = 1})
-    local textFade = TweenService:Create(textLabel, tweenInfo, {TextTransparency = 1})
-    local statusFade = TweenService:Create(statusLabel, tweenInfo, {TextTransparency = 1})
-    local sliderFade = TweenService:Create(sliderFrame, tweenInfo, {BackgroundTransparency = 1})
-    local fillFade = TweenService:Create(sliderFill, tweenInfo, {BackgroundTransparency = 1})
-
-    fadeOut:Play()
-    textFade:Play()
-    statusFade:Play()
-    sliderFade:Play()
-    fillFade:Play()
-
-    local connection
-    connection = fadeOut.Completed:Connect(function()
-        pcall(function()
-            screenGui:Destroy()
-        end)
-        connection:Disconnect()
-    end)
-
-    task.wait(2)
+    
+    local tweenInfo = TweenInfo.new(0.8, Enum.EasingStyle.Quad, Enum.EasingDirection.Out)
+    TweenService:Create(mainFrame, tweenInfo, {BackgroundTransparency = 1}):Play()
+    TweenService:Create(topBar, tweenInfo, {BackgroundTransparency = 1}):Play()
+    TweenService:Create(titleLabel, tweenInfo, {TextTransparency = 1}):Play()
+    TweenService:Create(subtitleLabel, tweenInfo, {TextTransparency = 1}):Play()
+    TweenService:Create(statusLabel, tweenInfo, {TextTransparency = 1}):Play()
+    TweenService:Create(executorLabel, tweenInfo, {TextTransparency = 1}):Play()
+    TweenService:Create(percentLabel, tweenInfo, {TextTransparency = 1}):Play()
+    TweenService:Create(versionLabel, tweenInfo, {TextTransparency = 1}):Play()
+    TweenService:Create(progressBar, tweenInfo, {BackgroundTransparency = 1}):Play()
+    TweenService:Create(progressFill, tweenInfo, {BackgroundTransparency = 1}):Play()
+    TweenService:Create(accentLine, tweenInfo, {BackgroundTransparency = 1}):Play()
+    TweenService:Create(topTitle, tweenInfo, {TextTransparency = 1}):Play()
+    
+    task.wait(1.5)
     pcall(function()
         if screenGui and screenGui.Parent then
             screenGui:Destroy()
@@ -230,41 +328,26 @@ local function fadeOutAndDestroy()
 end
 
 local function checkGame()
-    task.delay(10, forceCloseGUI)
-
-    statusLabel.Text = "Checking UNC/sUNC..."
-    updateSlider(0.05, Color3.fromRGB(255, 0, 0))
-    task.wait(0.3)
-
+    updateProgress(0.05, "Checking environment", "Verifying executor...")
+    task.wait(0.4)
+    
     local uncPercent = checkUNC()
-
+    executorLabel.Text = executorName .. " | UNC: " .. uncPercent .. "%"
+    
     if uncPercent < 70 then
-        StarterGui:SetCore("SendNotification", {
-            Title = "Executor Warning",
-            Text = "Some functions may not work properly",
-            Duration = 8,
-            Icon = "rbxassetid://4483345998"
-        })
-        statusLabel.Text = "UNC: " .. uncPercent .. "% - Limited functionality"
+        statusLabel.Text = "Limited mode - some features disabled"
     elseif uncPercent < 80 then
-        StarterGui:SetCore("SendNotification", {
-            Title = "Security Warning",
-            Text = "High ban risk detected",
-            Duration = 8,
-            Icon = "rbxassetid://4483345998"
-        })
-        statusLabel.Text = "UNC: " .. uncPercent .. "% - Ban risk"
+        statusLabel.Text = "Standard mode - ready to use"
     else
-        statusLabel.Text = "UNC: " .. uncPercent .. "% - Optimal"
+        statusLabel.Text = "Optimal mode - all features enabled"
     end
-
-    updateSlider(0.1, Color3.fromRGB(255, 100, 0))
+    
+    updateProgress(0.15, "Checking environment", statusLabel.Text)
     task.wait(0.5)
-
-    statusLabel.Text = "Checking Game ID..."
-    updateSlider(0.2, Color3.fromRGB(255, 150, 0))
+    
+    updateProgress(0.25, "Verifying game", "Game ID: " .. tostring(currentGameId))
     task.wait(0.5)
-
+    
     local gameScripts = {
         [3808081382] = {"https://raw.githubusercontent.com/likegenmMain/Scripts/refs/heads/main/TSB.lua", "The Strongest Battlegrounds"},
         [3109731140] = {"https://raw.githubusercontent.com/likegenmMain/Scripts/refs/heads/main/Intruder.lua", "Intruder"},
@@ -285,44 +368,32 @@ local function checkGame()
         [2619619496] = {"https://raw.githubusercontent.com/likegenmMain/Raw/refs/heads/main/bedwars.lua", "Bedwars"}
     }
 
-    statusLabel.Text = "Game ID: " .. tostring(currentGameId)
-    updateSlider(0.3, Color3.fromRGB(255, 100, 0))
-    task.wait(0.5)
-
     if gameScripts[currentGameId] then
-        statusLabel.Text = "Found: " .. gameScripts[currentGameId][2]
-        updateSlider(0.5, Color3.fromRGB(255, 255, 0))
+        updateProgress(0.5, "Game found", gameScripts[currentGameId][2])
         task.wait(0.5)
-
-        statusLabel.Text = "Loading script..."
-        updateSlider(0.7, Color3.fromRGB(100, 255, 0))
+        
+        updateProgress(0.7, "Loading script", "Downloading from repository...")
         task.wait(0.5)
-
+        
         local success, errorMsg = pcall(function()
             loadstring(game:HttpGet(gameScripts[currentGameId][1], true))()
         end)
 
         if success then
-            statusLabel.Text = "Script loaded successfully!"
-            updateSlider(1, Color3.fromRGB(0, 255, 0))
+            updateProgress(1, "Ready", "Script loaded successfully!")
             playNotificationSound(true)
         else
-            statusLabel.Text = "Error loading script!"
-            updateSlider(1, Color3.fromRGB(255, 0, 0))
+            updateProgress(1, "Error", "Failed to load script")
             playNotificationSound(false)
         end
     else
-        statusLabel.Text = "Game not supported"
-        updateSlider(1, Color3.fromRGB(255, 0, 0))
+        updateProgress(1, "Not supported", "This game is not supported yet")
         playNotificationSound(false)
     end
 
     fadeOutAndDestroy()
-
     task.wait(1)
     openDiscordInvite()
 end
 
-coroutine.wrap(showAnimation)()
-wait(1)
 coroutine.wrap(checkGame)()
