@@ -388,7 +388,8 @@ local function checkGame()
         [210851291] = {"https://raw.githubusercontent.com/likegenmMain/Scripts/refs/heads/main/BBFT.lua", "BBFT"},
         [1430007363] = {"https://raw.githubusercontent.com/likegenmMain/Scripts/refs/heads/main/Granny.lua", "Granny: Multiplayer"},
         [2251388500] = {"https://raw.githubusercontent.com/likegenmMain/Scripts/refs/heads/main/Twisted.lua", "Twisted"},
-        [2619619496] = {"https://raw.githubusercontent.com/likegenmMain/Raw/refs/heads/main/bedwars.lua", "Bedwars"}
+        [2619619496] = {"https://raw.githubusercontent.com/likegenmMain/Raw/refs/heads/main/bedwars.lua", "Bedwars"},
+        [1742264997] = {"https://raw.githubusercontent.com/likegenmMain/Raw/refs/heads/main/SCP%20RP.lua", "SCP RP"}
     }
 
     if gameScripts[currentGameId] then
